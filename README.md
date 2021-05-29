@@ -10,7 +10,7 @@ GlueLogics is an IoT platform, based on ThingsBoard, an open-source IoT platform
  
  - [customization](/customization) contains white labeling data and documentation about how to customize frontend and backend.
  
- - [documentation](/documentation) contains documentation about server configurations and application installation.
+ - [documentation](/documentation) contains documentation about server configurations, application installation and reference manuals.
  
  - [enteties](/enteties) contains example and own dashboards, plugins and rules configurations.
  
