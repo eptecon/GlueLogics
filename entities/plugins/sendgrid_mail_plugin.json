@@ -1,0 +1,26 @@
+{
+  "apiToken": "sendgrid",
+  "name": "SendGrid Mail Plugin",
+  "clazz": "org.thingsboard.server.extensions.core.plugin.mail.MailPlugin",
+  "publicAccess": false,
+  "state": "ACTIVE",
+  "configuration": {
+    "port": 587,
+    "host": "smtp.sendgrid.net",
+    "username": "apikey",
+    "password": "XXXXXXXXXXXXXX",
+    "otherProperties": [
+      {
+        "key": "mail.smtp.auth",
+        "value": "true"
+      },
+      {
+        "key": "mail.smtp.starttls.enable",
+        "value": "true"
+      }
+    ]
+  },
+  "additionalInfo": {
+    "description": "EMail Benachrichtigungen"
+  }
+}

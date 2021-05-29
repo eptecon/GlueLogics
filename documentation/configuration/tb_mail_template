@@ -1,0 +1,25 @@
+Subject:
+
+[$date.get('yyyy-MM-dd HH:mm')] Alarm ausgelöst von $ss.get('Typ')
+
+Body:
+
+[$date.get('yyyy-MM-dd HH:mm:ss')] Alarm ausgelöst von
+$ss.get('Typ') bei
+$ss.get('customer')
+$ss.get('adress')
+
+Hersteller: $cs.get('device_Manufacturer')
+Modell: $cs.get('device_Name')
+Typ: $cs.get('device_Type')
+Seriennummer: $cs.get('device_SN')
+Garantie: $cs.get('device_Warranty_due')
+
+Behandlung: $cs.get('device_Action')
+
+
+
+
+------------------------------------------------------------------------------------------------------------------
+connected by eptecon
+

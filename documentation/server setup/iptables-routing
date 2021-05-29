@@ -1,0 +1,36 @@
+iptables for redirect to localhost:
+
+$ iptables -L
+
+$ apt-get update
+
+(for saving permanently..)
+$ apt-get install iptables-persistent 
+
+
+Set input rules:
+
+$ iptables -A INPUT -i eth0 -p tcp -m tcp --dport 80 -j ACCEPT
+$ iptables -A INPUT -i eth0 -p tcp -m tcp --dport 8080 -j ACCEPT
+
+
+check:
+
+$ iptables --list --line-number
+
+
+Set prerouting rules:
+
+$ iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 80 -j REDIRECT --to-ports 8080
+
+$ iptables-save > /etc/iptables/rules.v4
+$ iptables-save > /etc/iptables/rules.v6
+
+
+
+(option, does not work...)
+$ invoke-rc.d iptables-persistent save
+
+
+
+

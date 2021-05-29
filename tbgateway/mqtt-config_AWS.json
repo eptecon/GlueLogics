@@ -1,0 +1,125 @@
+{
+  "brokers": [
+    {
+      "host": "a3n07wc0hcy897.iot.eu-west-1.amazonaws.com",
+      "port": 8883,
+      "ssl": true,
+      "retryInterval": 3000,
+      "credentials": {
+        "type": "cert.PEM",
+        "caCert" : "/etc/tb-gateway/conf/cert/rootCA.pem",
+        "privateKey" : "/etc/tb-gateway/conf/cert/5359801c16-private.pem.key",
+        "cert" : "/etc/tb-gateway/conf/cert/5359801c16-certificate.pem"
+      },
+      "mapping": [
+        {
+          "topicFilter": "iotbuttons",
+          "converter": {
+            "type": "json",
+            "filterExpression": "",
+            "deviceNameJsonExpression": "${$.serialNumber}",
+            "attributes": [
+              {
+                "type": "string",
+                "key": "serialNumber",
+                "value": "${$.serialNumber}"
+              }
+            ],
+            "timeseries": [
+              {
+                "type": "string",
+                "key": "batteryVoltage",
+                "value": "${$.batteryVoltage}"
+              },
+              {
+		            "type": "string",
+		            "key": "clickType",
+		            "value": "${$.clickType}"
+              }
+            ]
+          }
+        },
+        {
+          "topicFilter": "iotbutton/+/clickType",
+          "converter": {
+            "type": "json",
+            "filterExpression": "",
+            "deviceNameTopicExpression": "(?<=iotbutton\/)(.*?)(?=\/clickType)",
+            "timeout": 60000,
+            "timeseries": [
+              {
+                "type": "string",
+                "key": "clickType",
+                "value": "${$.value}"
+              }
+            ]
+          }
+        }
+      ],
+      "connectRequests": [
+        {
+          "topicFilter": "iotbuttons/connect",
+          "deviceNameJsonExpression": "${$.serialNumber}"
+        },
+        {
+          "topicFilter": "iotbutton/+/connect",
+          "deviceNameTopicExpression": "(?<=iotbutton\/)(.*?)(?=\/connect)"
+        }
+      ],
+      "disconnectRequests": [
+        {
+          "topicFilter": "iotbuttons/disconnect",
+          "deviceNameJsonExpression": "${$.serialNumber}"
+        },
+        {
+          "topicFilter": "iotbutton/+/disconnect",
+          "deviceNameTopicExpression": "(?<=iotbutton\/)(.*?)(?=\/disconnect)"
+        }
+      ],
+      "attributeRequests": [
+        {
+          "topicFilter": "iotbuttons/attributes",
+          "deviceNameJsonExpression": "${$.serialNumber}",
+          "attributeKeyJsonExpression": "${$.key}",
+          "requestIdJsonExpression": "${$.requestId}",
+          "clientScope": false,
+          "responseTopicExpression": "iotbuttons/${deviceName}/attributes/${responseId}",
+          "valueExpression": "{\"${attributeKey}\":\"${attributeValue}\"}"
+        },
+        {
+          "topicFilter": "iotbuttons/+/attributes/+/request/+",
+          "deviceNameTopicExpression": "(?<=iotbuttons\/)(.*?)(?=\/attributes)",
+          "attributeKeyTopicExpression": "(?<=attributes\/)(.*?)(?=\/request)",
+          "requestIdTopicExpression": "(?<=request\/)(.*?)($)",
+          "clientScope": false,
+          "responseTopicExpression": "iotbuttons/${deviceName}/attributes/${attributeKey}/response/${requestId}",
+          "valueExpression": "${attributeValue}"
+        }
+      ],
+      "attributeUpdates": [
+        {
+          "deviceNameFilter": ".*",
+          "attributeFilter": ".*",
+          "topicExpression": "iotbutton/${deviceName}/${attributeKey}",
+          "valueExpression": "{\"${attributeKey}\":\"${attributeValue}\"}"
+        }
+      ],
+      "serverSideRpc": [
+        {
+          "deviceNameFilter": ".*",
+          "methodFilter": "echo",
+          "requestTopicExpression": "iotbutton/${deviceName}/request/${methodName}/${requestId}",
+          "responseTopicExpression": "iotbutton/${deviceName}/response/${methodName}/${requestId}",
+          "responseTimeout": 10000,
+          "valueExpression": "${params}"
+        },
+        {
+          "deviceNameFilter": ".*",
+          "methodFilter": "no-reply",
+          "requestTopicExpression": "iotbutton/${deviceName}/request/${methodName}/${requestId}",
+          "valueExpression": "${params}"
+        }
+      ]
+    }
+  ]
+}

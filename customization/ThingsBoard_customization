@@ -1,0 +1,19 @@
+ThingsBoard Customize:
+
+ui/src/app/app.config.js
+
+- colors
+- languages
+- Theme
+
+
+app.run.js
+
+
+locale.constants.js
+
+
+dashboard.tpl
+
+
+

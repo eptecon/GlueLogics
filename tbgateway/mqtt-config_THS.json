@@ -1,0 +1,150 @@
+{
+  "brokers": [
+    {
+      "host": "mqtt.thingstream.io",
+      "port": 1883,
+      "ssl": false,
+      "retryInterval": 3000,
+      "clientId": "device:43ee0de5-6b8d-42d7-ac5b-18c1ec32e7b1",
+      "credentials": {
+        "type": "basic",
+        "username" : "E6M2C0P4SWD8JQT0PCHI",
+        "password" : "Iuqd84TfRxIKKi5EQpatzTZKe9tqCFu+9/k+mxtd"
+      },
+      "mapping": [
+        {
+          "topicFilter": "iotbuttons",
+          "converter": {
+            "type": "json",
+            "filterExpression": "",
+            "deviceNameJsonExpression": "${$.imsi}",
+            "attributes": [
+              {
+                "type": "string",
+                "key": "imsi",
+                "value": "${$.imsi}"
+              },
+               {
+                "type": "string",
+                "key": "imei",
+                "value": "${$.imei}"
+              },
+               {
+                "type": "string",
+                "key": "bearer",
+                "value": "${$.bearer}"
+              },
+               {
+                "type": "boolean",
+                "key": "roaming",
+                "value": "${$.roaming}"
+              }
+            ],
+            "timeseries": [
+              {
+                "type": "string",
+                "key": "buttonPressType",
+                "value": "${$.buttonPressType}"
+              },
+               {
+                "type": "double",
+                "key": "signalLevel",
+                "value": "${$.signalLevel}"
+              },
+               {
+                "type": "double",
+                "key": "buttonPressCount",
+                "value": "${$.buttonPressCount}"
+              },
+               {
+                "type": "double",
+                "key": "uptime",
+                "value": "${$.uptime}"
+              }
+            ]
+          }
+        },
+        {
+          "topicFilter": "iotbutton/+/clickType",
+          "converter": {
+            "type": "json",
+            "filterExpression": "",
+            "deviceNameTopicExpression": "(?<=iotbutton\/)(.*?)(?=\/clickType)",
+            "timeout": 60000,
+            "timeseries": [
+              {
+                "type": "string",
+                "key": "clickType",
+                "value": "${$.value}"
+              }
+            ]
+          }
+        }
+      ],
+      "connectRequests": [
+        {
+          "topicFilter": "iotbuttons/connect",
+          "deviceNameJsonExpression": "${$.imsi}"
+        },
+        {
+          "topicFilter": "iotbutton/+/connect",
+          "deviceNameTopicExpression": "(?<=iotbutton\/)(.*?)(?=\/connect)"
+        }
+      ],
+      "disconnectRequests": [
+        {
+          "topicFilter": "iotbuttons/disconnect",
+          "deviceNameJsonExpression": "${$.imsi}"
+        },
+        {
+          "topicFilter": "iotbutton/+/disconnect",
+          "deviceNameTopicExpression": "(?<=iotbutton\/)(.*?)(?=\/disconnect)"
+        }
+      ],
+      "attributeRequests": [
+        {
+          "topicFilter": "iotbuttons/attributes",
+          "deviceNameJsonExpression": "${$.imsi}",
+          "attributeKeyJsonExpression": "${$.key}",
+          "requestIdJsonExpression": "${$.requestId}",
+          "clientScope": false,
+          "responseTopicExpression": "iotbuttons/${deviceName}/attributes/${responseId}",
+          "valueExpression": "{\"${attributeKey}\":\"${attributeValue}\"}"
+        },
+        {
+          "topicFilter": "iotbuttons/+/attributes/+/request/+",
+          "deviceNameTopicExpression": "(?<=iotbuttons\/)(.*?)(?=\/attributes)",
+          "attributeKeyTopicExpression": "(?<=attributes\/)(.*?)(?=\/request)",
+          "requestIdTopicExpression": "(?<=request\/)(.*?)($)",
+          "clientScope": false,
+          "responseTopicExpression": "iotbuttons/${deviceName}/attributes/${attributeKey}/response/${requestId}",
+          "valueExpression": "${attributeValue}"
+        }
+      ],
+      "attributeUpdates": [
+        {
+          "deviceNameFilter": ".*",
+          "attributeFilter": ".*",
+          "topicExpression": "iotbutton/${deviceName}/${attributeKey}",
+          "valueExpression": "{\"${attributeKey}\":\"${attributeValue}\"}"
+        }
+      ],
+      "serverSideRpc": [
+        {
+          "deviceNameFilter": ".*",
+          "methodFilter": "echo",
+          "requestTopicExpression": "iotbutton/${deviceName}/request/${methodName}/${requestId}",
+          "responseTopicExpression": "iotbutton/${deviceName}/response/${methodName}/${requestId}",
+          "responseTimeout": 10000,
+          "valueExpression": "${params}"
+        },
+        {
+          "deviceNameFilter": ".*",
+          "methodFilter": "no-reply",
+          "requestTopicExpression": "iotbutton/${deviceName}/request/${methodName}/${requestId}",
+          "valueExpression": "${params}"
+        }
+      ]
+    }
+  ]
+}

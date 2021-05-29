@@ -1,0 +1,60 @@
+{
+  "name": "AWS  Button Alarm Rule",
+  "state": "ACTIVE",
+  "weight": 0,
+  "pluginToken": "sendgrid",
+  "filters": [
+    {
+      "configuration": {
+        "messageTypes": [
+          "POST_TELEMETRY",
+          "POST_ATTRIBUTES"
+        ]
+      },
+      "name": "Telemetry",
+      "clazz": "org.thingsboard.server.extensions.core.filter.MsgTypeFilter"
+    },
+    {
+      "configuration": {
+        "filter": "typeof status !== \"undefined\""
+      },
+      "name": "Telemetry",
+      "clazz": "org.thingsboard.server.extensions.core.filter.DeviceTelemetryFilter"
+    },
+    {
+      "configuration": {
+        "filter": "typeof device_Manufacturer !== \"undefined\" && typeof device_Name !== \"undefined\""
+      },
+      "name": "Attributes",
+      "clazz": "org.thingsboard.server.extensions.core.filter.DeviceAttributesFilter"
+    }
+  ],
+  "processor": {
+    "configuration": {
+      "alarmPropagateFlag": true,
+      "alarmDetailsTemplate": "{}",
+      "newAlarmExpression": "status == \"true\"",
+      "clearAlarmExpression": "status == \"false\"",
+      "alarmSeverity": "CRITICAL",
+      "alarmStatus": "ACTIVE_UNACK",
+      "newAlarmFlag": true,
+      "alarmTypeTemplate": "Button Alarm"
+    },
+    "name": "Button Alarm Processor",
+    "clazz": "org.thingsboard.server.extensions.core.processor.AlarmProcessor"
+  },
+  "action": {
+    "configuration": {
+      "sendFlag": "isNewAlarm",
+      "fromTemplate": "alarm@gluelogics.com",
+      "toTemplate": "gluelogics@eptecon.com",
+      "subjectTemplate": "[$date.get('yyyy-MM-dd HH:mm')] Alarm ausgelöst von $ss.get('Typ')",
+      "bodyTemplate": "[$date.get('yyyy-MM-dd HH:mm:ss')] Alarm ausgelöst von\n$ss.get('Typ') bei\n$ss.get('customer')\n$ss.get('adress')\n\nHersteller: $cs.get('device_Manufacturer')\nModell: $cs.get('device_Name')\nTyp: $cs.get('device_Type')\nSeriennummer: $cs.get('device_SN')\nGarantie: $cs.get('device_Warranty_due')\n\nBehandlung: $cs.get('device_Action')\n\n\n\n\n------------------------------------------------------------------------------------------------------------------\nconnected by eptecon\n"
+    },
+    "clazz": "org.thingsboard.server.extensions.core.action.mail.SendMailAction",
+    "name": "Alarm Mail"
+  },
+  "additionalInfo": {
+    "description": "Alarms for Service Button"
+  }
+}

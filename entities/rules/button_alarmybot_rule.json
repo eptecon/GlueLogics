@@ -1,0 +1,39 @@
+{
+  "name": "Button AlarmyBot Rule",
+  "state": "ACTIVE",
+  "weight": 0,
+  "pluginToken": "rest",
+  "filters": [
+    {
+      "configuration": {
+        "messageTypes": [
+          "POST_TELEMETRY"
+        ]
+      },
+      "name": "Telemetry",
+      "clazz": "org.thingsboard.server.extensions.core.filter.MsgTypeFilter"
+    },
+    {
+      "configuration": {
+        "filter": "typeof status !== \"undefined\""
+      },
+      "name": "Telemetry",
+      "clazz": "org.thingsboard.server.extensions.core.filter.DeviceTelemetryFilter"
+    }
+  ],
+  "processor": null,
+  "action": {
+    "configuration": {
+      "sync": false,
+      "actionPath": "/sendMessage",
+      "template": "{\"chat_id\" : \"-313008273\", \"text\" : \"[$date.get('yyyy-MM-dd HH:mm:ss')] Alarm ausgeloest von $ss.get('Typ') bei $ss.get('customer')! \n\nHersteller: $cs.get('device_Manufacturer') \nModell: $cs.get('device_Name') \nTyp: $cs.get('device_Type') \nSeriennummer: $cs.get('device_SN') \nGarantie: $cs.get('device_Warranty_due')\n\"}",
+      "requestMethod": "POST",
+      "expectedResultCode": 200
+    },
+    "clazz": "org.thingsboard.server.extensions.rest.action.RestApiCallPluginAction",
+    "name": "action"
+  },
+  "additionalInfo": {
+    "description": "Alarmy Bot Rule"
+  }
+}

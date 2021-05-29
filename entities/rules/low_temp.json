@@ -1,0 +1,39 @@
+{
+  "name": "Low temp",
+  "state": "SUSPENDED",
+  "weight": 0,
+  "pluginToken": null,
+  "filters": [
+    {
+      "configuration": {
+        "messageTypes": [
+          "POST_TELEMETRY"
+        ]
+      },
+      "name": "Telemetry",
+      "clazz": "org.thingsboard.server.extensions.core.filter.MsgTypeFilter"
+    },
+    {
+      "configuration": {
+        "filter": "typeof temperature !== \"undefined\""
+      },
+      "name": "Telemetry",
+      "clazz": "org.thingsboard.server.extensions.core.filter.DeviceTelemetryFilter"
+    }
+  ],
+  "processor": {
+    "configuration": {
+      "alarmPropagateFlag": true,
+      "alarmDetailsTemplate": "{}",
+      "newAlarmExpression": "temperature < 18",
+      "clearAlarmExpression": "temperature > 20",
+      "alarmSeverity": "CRITICAL",
+      "alarmStatus": "ACTIVE_UNACK",
+      "alarmTypeTemplate": "Low temp"
+    },
+    "name": "Low temp",
+    "clazz": "org.thingsboard.server.extensions.core.processor.AlarmProcessor"
+  },
+  "action": null,
+  "additionalInfo": null
+}

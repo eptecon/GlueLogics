@@ -1,0 +1,69 @@
+ThingsBoard Get, Build from source, Install, Remove:
+-------------------------------------------------------------------------
+
+Requirements & Prerequisites:
+
+Hardware:
+Ubuntu/Debian, 1GB RAM
+
+Java Oracle JDK 8 install:
+
+$ sudo apt-get update
+
+$ sudo add-apt-repository ppa:webupd8team/java
+$ sudo apt-get update
+
+$ sudo apt-get install oracle-java8-installer
+
+$ java -version
+
+$ sudo update-alternatives --config java
+
+	select auto mode
+
+$ sudo nano /etc/environment
+	
+	add line: JAVA_HOME="/usr/lib/jvm/java-8-oracle"
+
+$ source /etc/environment
+
+	activate path
+
+$ echo JAVA_HOME
+
+	test path
+
+
+Apache Maven 3.x.x install:
+
+$ sudo apt-get update
+
+$ sudo apt-get install maven
+
+
+ThingsBoard build (installation of maven required):
+
+$ mvn clean install -DskipTests
+
+$ option -DskipTests for skipping tests
+
+$ mvn -version
+
+
+TODO: get thingsboard.deb from git ...???
+
+
+Thingsboard install:
+
+$ sudo dpkg -i thingsboard.deb
+
+$ sudo /usr/share/thingsboard/bin/install/install.sh
+
+$ sudo service thingsboard start
+
+
+ThingsBoard remove:
+
+$ sudo dpkg --remove thingsboard
+
+

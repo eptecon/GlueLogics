@@ -1,0 +1,39 @@
+{
+  "name": "High temp",
+  "state": "SUSPENDED",
+  "weight": 0,
+  "pluginToken": null,
+  "filters": [
+    {
+      "configuration": {
+        "messageTypes": [
+          "POST_TELEMETRY"
+        ]
+      },
+      "name": "Telemetry",
+      "clazz": "org.thingsboard.server.extensions.core.filter.MsgTypeFilter"
+    },
+    {
+      "configuration": {
+        "filter": "typeof temperature !== \"undefined\""
+      },
+      "clazz": "org.thingsboard.server.extensions.core.filter.DeviceTelemetryFilter",
+      "name": "Telemetry"
+    }
+  ],
+  "processor": {
+    "configuration": {
+      "alarmPropagateFlag": true,
+      "alarmDetailsTemplate": "{}",
+      "newAlarmExpression": "temperature > 30",
+      "clearAlarmExpression": "temperature > 28",
+      "alarmSeverity": "CRITICAL",
+      "alarmStatus": "ACTIVE_UNACK",
+      "alarmTypeTemplate": "High temp"
+    },
+    "name": "High temp",
+    "clazz": "org.thingsboard.server.extensions.core.processor.AlarmProcessor"
+  },
+  "action": null,
+  "additionalInfo": null
+}

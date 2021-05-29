@@ -1,0 +1,53 @@
+install kafka:
+test
+Prerequisites:
+
+- Java 8 or higher
+- zookeeper
+
+install zookeeper:
+
+sudo apt-get install zookeeperd
+
+check ports:
+
+$ netstat -ant | grep :2181
+
+
+download from https://kafka.apache.org/downloads
+
+create directory:
+
+$ sudo mkdir /opt/kafka
+
+go to download directory and unpack:
+
+$ cd ~/Downloads
+
+$ sudo tar xvf kafka_2.12-1.0.0.tgz -C /opt/kafka
+
+
+install autostart script:
+
+$ sudo cp kafka /etc/init.d
+
+$ sudo cp -R ~/kafka_2.12-1.0.0 /opt
+
+$ sudo ln -s /opt/kafka_2.12-1.0.0 /opt/kafka
+
+$ sudo chmod 755 /etc/init.d/kafka
+
+$ sudo update-rc.d kafka defaults
+
+
+test, if working:
+
+$ netstat -ant | grep :2181
+
+$ netstat -ant | grep :9092
+
+$ sudo service kafka start
+
+$ netstat -ant | grep :2181
+
+$ netstat -ant | grep :9092

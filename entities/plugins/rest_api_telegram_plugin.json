@@ -1,0 +1,23 @@
+{
+  "apiToken": "rest",
+  "name": "REST API Telegram Plugin",
+  "clazz": "org.thingsboard.server.extensions.rest.plugin.RestApiCallPlugin",
+  "publicAccess": false,
+  "state": "ACTIVE",
+  "configuration": {
+    "port": 443,
+    "basePath": "/bot480690197:AAESv-SxO3NUZrFV8PyN2YCJv2Gw8uVvmYw",
+    "protocol": "https://",
+    "host": "api.telegram.org",
+    "authMethod": "NO_AUTH",
+    "headers": [
+      {
+        "key": "Content-Type",
+        "value": "application/json"
+      }
+    ]
+  },
+  "additionalInfo": {
+    "description": "REST API Telegram Plugin"
+  }
+}

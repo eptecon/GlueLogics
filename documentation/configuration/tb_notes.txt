@@ -1,0 +1,30 @@
+
+device _Type
+device_Action
+device_Manufacturer
+device_Name
+device_SN
+
+return value ? value.toFixed(2) + ' ' : '-';
+
+
+
+var $injector = widgetContext.$scope.$injector;
+
+$injector.get('deviceService').getDevice(entityId.id).then(function(device) {
+    if(device.type == 'energy sensor') {
+        openDashboardState('energy_state');
+    } else if(device.type == 'water sensor') {
+        openDashboardState('water_state');
+    } else {
+        openDashboardState('temperature_state');
+    }
+});
+
+
+
+typeof status !== "undefined" && status == "true"
+
+status == "false"
+
+
