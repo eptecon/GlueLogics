@@ -29,10 +29,6 @@ Documentation for ThingsBoard is hosted on [thingsboard.io](https://thingsboard.
 [**Coffee control Center**](http://gluelogics.iotwebtools.com/dashboards/555d2e50-11ab-11e8-85b1-2f26a206e194?publicId=c624bf50-19a7-11e8-8013-2f26a206e194)
 [![Smart coffee makers](./gluelogics-1.0/img/BV_GL.png "Smart coffee makers")](http://gluelogics.iotwebtools.com/dashboards/555d2e50-11ab-11e8-85b1-2f26a206e194?publicId=c624bf50-19a7-11e8-8013-2f26a206e194)
 
-## Getting Started
-
-Collect and Visualize your IoT data in minutes by following this [guide](https://thingsboard.io/docs/getting-started-guides/helloworld/).
-
 ## ThingsBoard Support/Docu
 
  - [Community chat](https://gitter.im/thingsboard/chat)
