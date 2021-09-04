@@ -22,7 +22,7 @@ GlueLogics is an IoT platform, based on ThingsBoard, an open-source IoT platform
  
  
 
-Documentation for ThingsBoard is hosted on [thingsboard.io](https://thingsboard.io/docs).
+Documentation for ThingsBoard is hosted on [thingsboard.io](https://thingsboard.io/docs). 
 
 ## IoT use cases
 
